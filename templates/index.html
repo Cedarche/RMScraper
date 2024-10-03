@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Search Results</title>
+</head>
+<body>
+    <h1>Hello, Matt!</h1>
+    <button id="download-btn">Download Search Results</button>
+
+    <script>
+        document.getElementById("download-btn").addEventListener("click", async () => {
+            try {
+                // Send request to the /download endpoint
+                const response = await fetch("/download");
+
+                if (response.ok) {
+                    // Get the filename from the Content-Disposition header
+                    const filename = response.headers.get('Content-Disposition').split('filename=')[1].replace(/"/g, '');
+                    
+                    // Get the blob data
+                    const blob = await response.blob();
+
+                    // Create a link element to download the file
+                    const link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = filename;
+                    link.click();
+
+                    // Clean up the object URL
+                    window.URL.revokeObjectURL(link.href);
+                } else {
+                    alert("Error downloading the file: " + response.statusText);
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        });
+    </script>
+</body>
+</html>
