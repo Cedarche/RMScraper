@@ -1,4 +1,4 @@
-Step 1 - Download the code as zip file (top right)
+Step 1 - Download the code as zip file (top right where it says <> Code)
 
 Step 2 - Unzip the folder, right click and select 'New terminal at folder' 
 
